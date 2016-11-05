@@ -19,7 +19,7 @@ namespace FriendsAndCo
 			base.OnAppearing();
 
 			// Set syncItems to true in order to synchronize the data on startup when running in offline mode
-			await RefreshItems(true, syncItems: false);
+			//await RefreshItems(true, syncItems: false);
 		}
 
 	
@@ -32,13 +32,17 @@ namespace FriendsAndCo
 
 		public async void OnAdd(object sender, EventArgs e)
 		{
-			
+			await Navigation.PushAsync(new NuovaLista());
 		}
 
+		public async void OnJoin(object sender, EventArgs e)
+		{
+			await Navigation.PushAsync(new JoinLista());
+		}
 		// Event handlers
 		public async void OnSelected(object sender, SelectedItemChangedEventArgs e)
 		{
-
+			await Navigation.PushAsync(new ListaDettaglio());
 			// prevents background getting highlighted
 			todoList.SelectedItem = null;
 		}
