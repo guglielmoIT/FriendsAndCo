@@ -4,13 +4,12 @@ using Newtonsoft.Json;
 
 namespace FriendsAndCo
 {
-	public class ListaItem
+	public class ListaGruppiItem
 	{
 		string id;
 		string descrizione;
 		bool deleted;
-		string idUtenteCreatore;
-		DateTime dataFineValidita;
+		string idLista;
 
 		[JsonProperty(PropertyName = "id")]
 		public string Id
@@ -33,19 +32,14 @@ namespace FriendsAndCo
 			set { deleted = value; }
 		}
 
-		[JsonProperty(PropertyName = "idUtenteCreatore")]
-		public string IdUtenteCreatore
+		[JsonProperty(PropertyName = "idLista")]
+		public string IdLista
 		{
-			get { return idUtenteCreatore; }
-			set { idUtenteCreatore = value; }
+			get { return idLista; }
+			set { idLista = value; }
 		}
-		[JsonProperty(PropertyName = "dataFineValidita")]
-		public DateTime DataFineValidita
-		{
-			get { return dataFineValidita; }
-			set { dataFineValidita = value; }
-		}
-[Version]
+
+		[Version]
 		public string Version { get; set; }
 	}
 }

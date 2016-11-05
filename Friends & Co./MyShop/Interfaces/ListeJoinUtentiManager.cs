@@ -17,24 +17,24 @@ using Microsoft.WindowsAzure.MobileServices;
 
 namespace FriendsAndCo
 {
-	public partial class ListeItemManager
+	public partial class ListeJoinUtentiManager
 	{
-		static ListeItemManager defaultInstance = new ListeItemManager();
+		static ListeJoinUtentiManager defaultInstance = new ListeJoinUtentiManager();
 		MobileServiceClient client;
 
 
-		IMobileServiceTable<ListaItem> todoTable;
+		IMobileServiceTable<ListaJoinUtentiItem> todoTable;
 
-		private ListeItemManager()
+		private ListeJoinUtentiManager()
 		{
 			this.client = new MobileServiceClient(
 				Constants.ApplicationURL);
 
 
-			this.todoTable = client.GetTable<ListaItem>();
+			this.todoTable = client.GetTable<ListaJoinUtentiItem>();
 		}
 
-		public static ListeItemManager DefaultManager
+		public static ListeJoinUtentiManager DefaultManager
 		{
 			get
 			{
@@ -53,19 +53,19 @@ namespace FriendsAndCo
 
 		public bool IsOfflineEnabled
 		{
-			get { return todoTable is Microsoft.WindowsAzure.MobileServices.Sync.IMobileServiceSyncTable<ListaItem>; }
+			get { return todoTable is Microsoft.WindowsAzure.MobileServices.Sync.IMobileServiceSyncTable<ListaJoinUtentiItem>; }
 		}
 
-		public async Task<ObservableCollection<ListaItem>> GetTodoItemsAsync(bool syncItems = false)
+		public async Task<ObservableCollection<ListaJoinUtentiItem>> GetTodoItemsAsync(bool syncItems = false)
 		{
 			try
 			{
 
-				IEnumerable<ListaItem> items = await todoTable
-					.Where(todoItem => !todoItem.Done)
+				IEnumerable<ListaJoinUtentiItem> items = await todoTable
+					.Where(todoItem => !todoItem.Deleted)
 					.ToEnumerableAsync();
 
-				return new ObservableCollection<ListaItem>(items);
+				return new ObservableCollection<ListaJoinUtentiItem>(items);
 			}
 			catch (MobileServiceInvalidOperationException msioe)
 			{
@@ -78,7 +78,7 @@ namespace FriendsAndCo
 			return null;
 		}
 
-		public async Task SaveTaskAsync(ListaItem item)
+		public async Task SaveTaskAsync(ListaJoinUtentiItem item)
 		{
 			if (item.Id == null)
 			{

@@ -1,3 +1,4 @@
+﻿ 
 // To add offline sync support: add the NuGet package WindowsAzure.MobileServices.SQLiteStore
 // to all projects in the solution and uncomment the symbol definition OFFLINE_SYNC_ENABLED
 // For Xamarin.iOS, also edit AppDelegate.cs and uncomment the call to SQLitePCL.CurrentPlatform.Init()
@@ -17,24 +18,23 @@ using Microsoft.WindowsAzure.MobileServices;
 
 namespace FriendsAndCo
 {
-	public partial class ListeItemManager
+	public partial class ListaGruppiItemManager
 	{
-		static ListeItemManager defaultInstance = new ListeItemManager();
+		static ListaGruppiItemManager defaultInstance = new ListaGruppiItemManager();
 		MobileServiceClient client;
 
 
-		IMobileServiceTable<ListaItem> todoTable;
+		IMobileServiceTable<ListaGruppiItemItem> todoTable;
 
-		private ListeItemManager()
+		private ListaGruppiItemManager()
 		{
 			this.client = new MobileServiceClient(
 				Constants.ApplicationURL);
 
-
-			this.todoTable = client.GetTable<ListaItem>();
+		this.todoTable = client.GetTable<ListaGruppiItemItem>();
 		}
 
-		public static ListeItemManager DefaultManager
+		public static ListaGruppiItemManager DefaultManager
 		{
 			get
 			{
@@ -53,19 +53,19 @@ namespace FriendsAndCo
 
 		public bool IsOfflineEnabled
 		{
-			get { return todoTable is Microsoft.WindowsAzure.MobileServices.Sync.IMobileServiceSyncTable<ListaItem>; }
+			get { return todoTable is Microsoft.WindowsAzure.MobileServices.Sync.IMobileServiceSyncTable<ListaGruppiItemItem>; }
 		}
 
-		public async Task<ObservableCollection<ListaItem>> GetTodoItemsAsync(bool syncItems = false)
+		public async Task<ObservableCollection<ListaGruppiItemItem>> GetTodoItemsAsync(bool syncItems = false)
 		{
 			try
 			{
 
-				IEnumerable<ListaItem> items = await todoTable
-					.Where(todoItem => !todoItem.Done)
+				IEnumerable<ListaGruppiItemItem> items = await todoTable
+					.Where(todoItem => !todoItem.Deleted)
 					.ToEnumerableAsync();
 
-				return new ObservableCollection<ListaItem>(items);
+				return new ObservableCollection<ListaGruppiItemItem>(items);
 			}
 			catch (MobileServiceInvalidOperationException msioe)
 			{
@@ -78,7 +78,7 @@ namespace FriendsAndCo
 			return null;
 		}
 
-		public async Task SaveTaskAsync(ListaItem item)
+		public async Task SaveTaskAsync(ListaGruppiItemItem item)
 		{
 			if (item.Id == null)
 			{

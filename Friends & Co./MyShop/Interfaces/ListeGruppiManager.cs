@@ -1,4 +1,4 @@
-// To add offline sync support: add the NuGet package WindowsAzure.MobileServices.SQLiteStore
+﻿// To add offline sync support: add the NuGet package WindowsAzure.MobileServices.SQLiteStore
 // to all projects in the solution and uncomment the symbol definition OFFLINE_SYNC_ENABLED
 // For Xamarin.iOS, also edit AppDelegate.cs and uncomment the call to SQLitePCL.CurrentPlatform.Init()
 // For more information, see: http://go.microsoft.com/fwlink/?LinkId=620342 
@@ -17,24 +17,23 @@ using Microsoft.WindowsAzure.MobileServices;
 
 namespace FriendsAndCo
 {
-	public partial class ListeItemManager
+	public partial class ListeGruppiManager
 	{
-		static ListeItemManager defaultInstance = new ListeItemManager();
+		static ListeGruppiManager defaultInstance = new ListeGruppiManager();
 		MobileServiceClient client;
 
+		IMobileServiceTable<ListaGruppiItem> todoTable;
 
-		IMobileServiceTable<ListaItem> todoTable;
-
-		private ListeItemManager()
+		private ListeGruppiManager()
 		{
 			this.client = new MobileServiceClient(
 				Constants.ApplicationURL);
 
 
-			this.todoTable = client.GetTable<ListaItem>();
+			this.todoTable = client.GetTable<ListaGruppiItem>();
 		}
 
-		public static ListeItemManager DefaultManager
+		public static ListeGruppiManager DefaultManager
 		{
 			get
 			{
@@ -53,19 +52,19 @@ namespace FriendsAndCo
 
 		public bool IsOfflineEnabled
 		{
-			get { return todoTable is Microsoft.WindowsAzure.MobileServices.Sync.IMobileServiceSyncTable<ListaItem>; }
+			get { return todoTable is Microsoft.WindowsAzure.MobileServices.Sync.IMobileServiceSyncTable<ListaGruppiItem>; }
 		}
 
-		public async Task<ObservableCollection<ListaItem>> GetTodoItemsAsync(bool syncItems = false)
+		public async Task<ObservableCollection<ListaGruppiItem>> GetTodoItemsAsync(bool syncItems = false)
 		{
 			try
 			{
 
-				IEnumerable<ListaItem> items = await todoTable
-					.Where(todoItem => !todoItem.Done)
+				IEnumerable<ListaGruppiItem> items = await todoTable
+					.Where(todoItem => !todoItem.Deleted)
 					.ToEnumerableAsync();
 
-				return new ObservableCollection<ListaItem>(items);
+				return new ObservableCollection<ListaGruppiItem>(items);
 			}
 			catch (MobileServiceInvalidOperationException msioe)
 			{
@@ -78,7 +77,7 @@ namespace FriendsAndCo
 			return null;
 		}
 
-		public async Task SaveTaskAsync(ListaItem item)
+		public async Task SaveTaskAsync(ListaGruppiItem item)
 		{
 			if (item.Id == null)
 			{
