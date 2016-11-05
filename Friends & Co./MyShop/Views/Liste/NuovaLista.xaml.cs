@@ -7,9 +7,12 @@ namespace FriendsAndCo
 {
 	public partial class NuovaLista : ContentPage
 	{
+		ListeItemManager manager;
 		public NuovaLista()
 		{
 			InitializeComponent();
+			gestQuote.IsVisible = false;
+			dataFinoAl.Date = System.DateTime.Now.AddDays(30);
 		}
 		protected override async void OnAppearing()
 		{
@@ -20,6 +23,11 @@ namespace FriendsAndCo
 		}
 		public async void OnSalvaDescrizione(object sender, EventArgs e)
 		{
+			ListaItem lista = new ListaItem();
+			lista.Descrizione = descrizioneLista.Text;
+			await manager.SaveTaskAsync(lista);
+
+			buttonsGruppiPanel0.IsVisible = true;
 			buttonsGruppiPanel1.IsVisible = true;
 			buttonsGruppiPanel2.IsVisible = true;
 		}
