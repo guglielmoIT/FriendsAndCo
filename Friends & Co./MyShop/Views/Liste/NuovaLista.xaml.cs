@@ -64,11 +64,11 @@ namespace FriendsAndCo
 		}
 		public async void OnGestIntolleranze(object sender, EventArgs e)
 		{
-			await Navigation.PushAsync(new NuovaLista());
+			await Navigation.PushAsync(new GestIntolleranze());
 		}
 		public async void OnGestAllergie(object sender, EventArgs e)
 		{
-			await Navigation.PushAsync(new NuovaLista());
+			await Navigation.PushAsync(new GestAllergie());
 		}
 		public async void OnGestQuote(object sender, EventArgs e)
 		{
@@ -76,7 +76,7 @@ namespace FriendsAndCo
 		}
 		public async void OnGestPersonalizzato(object sender, EventArgs e)
 		{
-			await Navigation.PushAsync(new NuovaLista());
+			await Navigation.PushAsync(new gestPersonalizzato());
 		}
 
 	}
