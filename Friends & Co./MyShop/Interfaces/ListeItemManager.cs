@@ -62,7 +62,7 @@ namespace FriendsAndCo
 			{
 
 				IEnumerable<ListaItem> items = await todoTable
-					.Where(todoItem => !todoItem.Done)
+					.Where(todoItem => !todoItem.Deleted)
 					.ToEnumerableAsync();
 
 				return new ObservableCollection<ListaItem>(items);

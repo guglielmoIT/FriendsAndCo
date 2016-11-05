@@ -25,9 +25,9 @@ namespace FriendsAndCo
 	
 		async Task CompleteItem(ListaItem item)
 		{
-			item.Done = true;
+			//item.Done = true;
 			await manager.SaveTaskAsync(item);
-			todoList.ItemsSource = await manager.GetTodoItemsAsync();
+			//todoList.ItemsSource = await manager.GetTodoItemsAsync();
 		}
 
 		public async void OnAdd(object sender, EventArgs e)
@@ -44,7 +44,7 @@ namespace FriendsAndCo
 		{
 			await Navigation.PushAsync(new ListaDettaglio());
 			// prevents background getting highlighted
-			todoList.SelectedItem = null;
+			//todoList.SelectedItem = null;
 		}
 
 		// http://developer.xamarin.com/guides/cross-platform/xamarin-forms/working-with/listview/#pulltorefresh
@@ -80,7 +80,7 @@ namespace FriendsAndCo
 		{
 			using (var scope = new ActivityIndicatorScope(syncIndicator, showActivityIndicator))
 			{
-				todoList.ItemsSource = await manager.GetTodoItemsAsync(syncItems);
+				//todoList.ItemsSource = await manager.GetTodoItemsAsync(syncItems);
 			}
 		}
 
