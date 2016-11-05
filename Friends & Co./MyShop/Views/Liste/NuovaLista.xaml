@@ -18,6 +18,7 @@
 				  BackgroundColor="White" Orientation="Vertical"  >
 			      <Label Text="Descrizione Evento"  TextColor="Black" FontFamily="Arial" FontAttributes="Bold" FontSize="15"   ></Label>
 				  <Entry x:Name="descrizioneLista" Placeholder="Descrizione" WidthRequest="350" HorizontalOptions="Center"  ></Entry>
+				  <Entry x:Name="idLista" Text="" IsVisible="false" WidthRequest="350" HorizontalOptions="Center"  ></Entry>
 				  <Label Text="Valido fino al"  TextColor="Black" FontFamily="Arial" FontAttributes="Bold" FontSize="15"   ></Label>
 				  <DatePicker x:Name="dataFinoAl"  ></DatePicker>
 		    </StackLayout>

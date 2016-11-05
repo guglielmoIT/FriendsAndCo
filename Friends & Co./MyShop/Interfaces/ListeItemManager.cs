@@ -22,7 +22,6 @@ namespace FriendsAndCo
 		static ListeItemManager defaultInstance = new ListeItemManager();
 		MobileServiceClient client;
 
-
 		IMobileServiceTable<ListaItem> todoTable;
 
 		private ListeItemManager()
@@ -83,6 +82,7 @@ namespace FriendsAndCo
 			if (item.Id == null)
 			{
 				await todoTable.InsertAsync(item);
+
 			}
 			else {
 				await todoTable.UpdateAsync(item);

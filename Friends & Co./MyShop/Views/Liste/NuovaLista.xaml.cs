@@ -8,6 +8,8 @@ namespace FriendsAndCo
 	public partial class NuovaLista : ContentPage
 	{
 		ListeItemManager manager;
+		ListeJoinUtentiManager managerJoin;
+
 		public NuovaLista()
 		{
 			InitializeComponent();
@@ -23,9 +25,38 @@ namespace FriendsAndCo
 		}
 		public async void OnSalvaDescrizione(object sender, EventArgs e)
 		{
+
+			LocalDb Db = new LocalDb();
+			User usr = await Db.GetLocalUserAsync();
+
+
 			ListaItem lista = new ListaItem();
 			lista.Descrizione = descrizioneLista.Text;
+			lista.DataFineValidita = dataFinoAl.Date;
+			if (idLista.Text != "")
+			{
+				lista.Id = idLista.Text;
+			}
+			lista.IdUtenteCreatore = usr.Id;
+			manager = ListeItemManager.DefaultManager;
+
 			await manager.SaveTaskAsync(lista);
+
+			if (idLista.Text == "")
+			{
+				//salvataggio Join utenti
+				ListaJoinUtentiItem listaJoin = new ListaJoinUtentiItem();
+				listaJoin.IdLista = lista.Id;
+				listaJoin.IdUtente = usr.Id;
+				listaJoin.Proprietario = true;
+				managerJoin = ListeJoinUtentiManager.DefaultManager;
+
+				await managerJoin.SaveTaskAsync(listaJoin);
+
+			}
+
+			idLista.Text = lista.Id;
+
 
 			buttonsGruppiPanel0.IsVisible = true;
 			buttonsGruppiPanel1.IsVisible = true;
