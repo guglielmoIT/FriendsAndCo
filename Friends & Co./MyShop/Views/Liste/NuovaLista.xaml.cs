@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using MvvmHelpers;
 
 using Xamarin.Forms;
 
@@ -9,6 +11,13 @@ namespace FriendsAndCo
 	{
 		ListeItemManager manager;
 		ListeJoinUtentiManager managerJoin;
+		ListeGruppiManager managerGruppi;
+		ListaGruppiItemManager managerGruppiItem;
+		IntolleranzeItemManager managerIntolleranze;
+		AllergieItemManager managerAllergie;
+
+		public ObservableRangeCollection<IntolleranzeItem> itemsIntolleranze { get; set; }
+		public ObservableRangeCollection<AllergieItem> itemsAllergie { get; set; }
 
 		public NuovaLista()
 		{
@@ -52,6 +61,56 @@ namespace FriendsAndCo
 				managerJoin = ListeJoinUtentiManager.DefaultManager;
 
 				await managerJoin.SaveTaskAsync(listaJoin);
+
+				//Inserisco le intolleranze 
+				IntolleranzeItem listIntolleranze = new IntolleranzeItem();
+				var intolleranzeVar = await managerIntolleranze.GetTodoItemsAsync(false);
+				itemsIntolleranze.Clear();
+				itemsIntolleranze.ReplaceRange(intolleranzeVar);
+
+
+				foreach (var item in itemsIntolleranze)
+				{
+					ListaGruppiItem listaGruppiItem = new ListaGruppiItem();
+					listaGruppiItem.IdLista = lista.Id;
+					listaGruppiItem.Descrizione = "Intolleranze";
+					await managerGruppi.SaveTaskAsync(listaGruppiItem);
+
+					ListaGruppiItemItem listaGruppiItemItem = new ListaGruppiItemItem();
+					listaGruppiItemItem.Completo = false;
+					listaGruppiItemItem.Descrizione = item.Descrizione;
+					listaGruppiItemItem.Selezionato = false;
+					listaGruppiItemItem.Idgruppo = listaGruppiItem.Id;
+					listaGruppiItemItem.Completabile = false;
+
+					await managerGruppiItem.SaveTaskAsync(listaGruppiItemItem);
+				}
+
+				//Inserisco le allergie 
+				AllergieItem listAllergie = new AllergieItem();
+				var allergieVar = await managerAllergie.GetTodoItemsAsync(false);
+				itemsAllergie.Clear();
+				itemsAllergie.ReplaceRange(allergieVar);
+
+
+				foreach (var item in itemsAllergie)
+				{
+					ListaGruppiItem listaGruppiItem = new ListaGruppiItem();
+					listaGruppiItem.IdLista = lista.Id;
+					listaGruppiItem.Descrizione = "Allegie";
+					await managerGruppi.SaveTaskAsync(listaGruppiItem);
+
+					ListaGruppiItemItem listaGruppiItemItem = new ListaGruppiItemItem();
+					listaGruppiItemItem.Completo = false;
+					listaGruppiItemItem.Descrizione = item.Descrizione;
+					listaGruppiItemItem.Selezionato = false;
+					listaGruppiItemItem.Idgruppo = listaGruppiItem.Id;
+					listaGruppiItemItem.Completabile = false;
+
+					await managerGruppiItem.SaveTaskAsync(listaGruppiItemItem);
+				}
+
+
 
 			}
 

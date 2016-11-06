@@ -10,6 +10,10 @@ namespace FriendsAndCo
 		string descrizione;
 		bool deleted;
 		string idgruppo;
+		bool completo;
+		bool selezionato;
+		string iduserCompletato;
+		bool completabile;
 
 		[JsonProperty(PropertyName = "id")]
 		public string Id
@@ -39,6 +43,33 @@ namespace FriendsAndCo
 			set { idgruppo = value; }
 		}
 
+		[JsonProperty(PropertyName = "completo")]
+		public bool Completo
+		{
+			get { return completo; }
+			set { completo = value; }
+		}
+
+		[JsonProperty(PropertyName = "selezionato")]
+		public bool Selezionato
+		{
+			get { return selezionato; }
+			set { selezionato = value; }
+		}
+
+		[JsonProperty(PropertyName = "iduserCompletato")]
+		public string IdUserCompletato
+		{
+			get { return iduserCompletato; }
+			set { iduserCompletato = value; }
+		}
+
+		[JsonProperty(PropertyName = "completabile")]
+		public bool Completabile
+		{
+			get { return completabile; }
+			set { completabile = value; }
+		}
 
 		[Version]
 		public string Version { get; set; }
