@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="FriendsAndCo.Allergie">
+	<ContentPage.Content>
+			<StackLayout BackgroundColor="Green">
+			<StackLayout HorizontalOptions="Center" Orientation="Horizontal" Padding="10" IsVisible="{Binding IsBusy}">
+				<ActivityIndicator x:Name="progressBar" HorizontalOptions="Center" IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+				<Label x:Name="progressBarText" HorizontalOptions="Center" VerticalOptions="Center" Text="{Binding Message}" />
+			<ContentView HorizontalOptions="CenterAndExpand"
+					VerticalOptions="CenterAndExpand">
+			<Label
+			x:Name="titolo"
+			FontAttributes="Bold,Italic"
+			FontSize="Large"
+			FontFamily="Arial"			
+			Text="Gestione Eventi"
+			TextColor="White" />
+			
+			</ContentView>
+			</StackLayout>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<StackLayout>
+						</StackLayout>
+						<StackLayout x:Name="buttonsPanel" Grid.Column="1" Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+							<Button x:Name="addLista" Text="Nuova" BorderWidth="1" BorderColor="White" BorderRadius="20" WidthRequest="100" TextColor="White" MinimumHeightRequest="30" Clicked="OnAdd" />
+						</StackLayout>
+					</Grid>
+			<Grid RowSpacing="0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+				<ListView x:Name="todoList" ItemSelected="OnSelected" IsPullToRefreshEnabled="true" Refreshing="OnRefresh" Grid.Row="1">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell Height="30">
+								<ViewCell.ContextActions>
+									<MenuItem Clicked="OnDelete" Text="Delete" IsDestructive="true" CommandParameter="{Binding .}" />
+								</ViewCell.ContextActions>
+								<StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal" Padding="15,5,0,0">
+									<StackLayout Padding="5,0,0,0" VerticalOptions="StartAndExpand" Orientation="Vertical">
+										<Label Text="{Binding Descrizione}" />
+										<Entry x:Name="entryListaId" Text="{Binding Id}" IsVisible="false" />
+									</StackLayout>
+								</StackLayout>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+			</Grid>
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
